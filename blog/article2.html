@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ═══════════════ 页面标题（替换为文章标题） ═══════════════ -->
+    <title>“别乱折腾”——记一次学校一体机黑屏风波 - 新闻</title>
+
+    <!-- ═══════════════ 外部资源（通常无需修改） ═══════════════ -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+    <!-- ═══════════════ Tailwind 配置（通常无需修改） ═══════════════ -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ═══════════════ 自定义样式（通常无需修改） ═══════════════ -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance {
+                text-wrap: balance;
+            }
+            .prose-custom {
+                @apply max-w-none text-gray-800 dark:text-gray-200 leading-relaxed;
+            }
+            .prose-custom h2 {
+                @apply text-2xl font-bold mt-10 mb-4 scroll-mt-20;
+            }
+            .prose-custom h3 {
+                @apply text-xl font-semibold mt-8 mb-3 scroll-mt-20;
+            }
+            .prose-custom p {
+                @apply mb-4;
+            }
+            .prose-custom ul, .prose-custom ol {
+                @apply mb-4 pl-6;
+            }
+            .prose-custom li {
+                @apply mb-2;
+            }
+            .prose-custom code {
+                @apply bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono;
+            }
+            .prose-custom pre {
+                @apply bg-gray-800 rounded-lg p-4 overflow-x-auto mb-6;
+            }
+            .prose-custom pre code {
+                @apply bg-transparent p-0 text-gray-200;
+            }
+            .toc-link {
+                @apply block py-1 px-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-400;
+            }
+            .toc-link.active {
+                @apply bg-blue-50 dark:bg-blue-900/30 text-primary font-medium;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+
+    <!-- ═══════════════ 导航栏（替换站点名称与链接） ═══════════════ -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- 左侧 Logo + 返回文字 -->
+            <a href="/blog/" class="text-xl font-bold text-primary">
+                <div class="flex items-center gap-3">
+                    <img src="/favicon.ico" class="w-12 h-12 object-contain" alt="图标">
+                    <span>返回</span>
+                </div>
+            </a>
+            <!-- 右侧导航菜单 -->
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-primary transition-colors">安卓学校官网</a></li>
+                    <li><a href="/blog/about.html" class="hover:text-primary transition-colors">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══════════════ 主内容区 ═══════════════ -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- ========== 文章内容（左侧） ========== -->
+            <article class="lg:w-3/4">
+
+                <!-- 文章头部 -->
+                <div class="mb-8">
+                    <a href="index.html" class="inline-flex items-center text-primary hover:underline mb-4">
+                        ← 返回目录
+                    </a>
+                    <!-- ★ 文章主标题 -->
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4 text-balance">“别乱折腾”——记一次学校一体机黑屏风波</h1>
+                    <!-- ★ 发布日期与阅读时间 -->
+                    <div class="flex items-center text-gray-500 dark:text-gray-400">
+                        <span>发布于 2026-05-03</span>
+                        <span class="mx-2">•</span>
+                        <span>阅读时间：5 分钟</span>
+                    </div>
+                    <!-- ★ 文章摘要引言（增加引言区块） -->
+                    <div class="mt-6 p-5 bg-blue-50/50 dark:bg-blue-900/20 border-l-4 border-primary rounded-r-lg italic text-gray-700 dark:text-gray-300">
+                        <p class="mb-0 leading-relaxed">摘要：那日下午，教室外的天色灰蒙蒙的，一个人把我叫过去，说有台一体机里装了许多垃圾软件，让我帮着删一删。我起初想推辞，却碍于情面跟了过去。不曾想，删软件途中机器卡死，一次心急的拔电源操作导致屏幕彻底黑屏，让我陷入巨大的恐惧与自责——直到电教老师的到来，才让一切“活”了过来。</p>
+                    </div>
+                </div>
+
+                <!-- 文章正文区（章节化） -->
+                <div class="prose-custom">
+                    <!-- 第一章 -->
+                    <h2 id="unwilling-help">一、无法推辞的帮忙</h2>
+                    <p>那日下午，教室外的天色灰蒙蒙的，太阳像隔着一层旧毛玻璃，照也照不亮。一个人——我如今想来，也未必是存心害我，不过是随手拉扯了罢了——忽然把我叫过去，说有台一体机里装了许多垃圾软件，弹窗不少，桌面又乱，老师看见了不好，叫我帮着删一删。我起初是想推掉的。第一则我并不懂修电脑：第二则这种“帮忙”，在学校里常常意味着一旦出了事，最先倒霉的未必是原主人，倒总是那个“恰好在旁边动手的人”。然而人活在学校里，最难的事之一，便是把一个并不过分的请求断然推开。况且对方拉着我过去时，神情很自然，仿佛叫我删几个软件，不过同叫我递一支笔、搬一张凳子一样平常。我若过分推辞，倒显得小气，显得怕事，显得不合群。于是我便跟了过去。</p>
+                    
+                    <!-- 第二章 -->
+                    <h2 id="crash-reboot">二、卡死与错误的“重启”</h2>
+                    <p>删了一半，机器忽然卡住了。</p>
+                    <p>起初我并不十分慌，因为机器卡死，在如今原是极常见的事，如学生上课走神、老师开会拖堂，虽烦，却还不到天塌地陷的地步。我先等了一会儿。等，是学校最擅长训练人的本领之一：等上课铃，等下课铃，等考试结束，等成绩发布，等处分决定，等哪一位老师忽然大发慈悲。于是我也很自然地等那台一体机自己缓过来。可它并不动。鼠标僵在屏幕上，窗口白着一张脸，像人话说到一半忽然噎住，再也接不上气。我轻轻点了几下鼠标，它不理；敲几下键盘，它也不理。它那沉默里竟有一种叫人心里发空的倔强，仿佛一个病人先前还肯哼哼两声，此刻却连哼都不哼了。</p>
+                    <p>我心里于是有些急了。</p>
+                    <p>人一急，脑子里便没有了远近轻重，只剩下“快些好”的念头。我那时不过是个中学生，又正处在大一种最容易把“会一点”误认成“都懂”的年纪。平日里手机卡下，长按重启；家里路由器断了，拔插一下也能恢复，于是这种粗陋的经验便在我心里积成一堆很庸俗的自信，以为世上的机器大抵相通，不管大病小病，总有一剂“重启”的猛药。我看了看那台一体机，又看了看电源，心里竟还觉得这法子极平常，极稳妥，甚至带一点办事利落的聪明。于是我便把电源线拔了，又插了回去。</p>
+                    <p>谁知道，这一拔一插，竟像我把自己的魂也一同拔了出去。</p>
+                    
+                    <!-- 第三章 -->
+                    <h2 id="fear-abyss">三、黑屏后的恐惧深渊</h2>
+                    <p>屏幕彻底黑了。</p>
+                    <p>那黑不是卡死时的黑，不是还有一线生机，仍可等待的黑，而是一种十分彻底、十分平整、十分不留余地的黑。它既不亮，也不响，像忽然决定与这世界断绝关系似的。我对着它愣住，心里先是一片空白，接着才有一阵凉意慢慢从胃里升到胸口，再升到脸上，连指尖都发麻了。我试着拨开机键，没有反应；又按，还是没有。我听见自己的心跳忽然重起来，重得像有人在胸腔里一下一下敲木鱼，敲得我脑门都发紧。</p>
+                    <p>这时我才真正知道，什么叫祸到临头。</p>
+                    <p>先前删软件时，我原还有点“帮忙做事”的神气，仿佛自己虽不是电脑高手，到底也算敢于上手的人；此刻这种神气顿时碎得干干净净，剩下的只是一种裸露的、可耻的恐惧。我首先想到的，并不是机器里有什么资料，也不是它还能不能修，而是赔钱、处分、通报、叫家长。这些词平日写在校规校纪上，不过像墙上的标语，人人都看过，谁也不把它当真；一旦真的落到自己头上，便忽然都长出牙齿来。我想：这是一体机，不是铅笔，不是扫把，不是踢坏了赔十块二十块就能了事的东西。它是学校资产，是要登记入账的，是动辄几千万的。我家里并不宽裕，若真要赔，先不说赔不赔得起，单是“你在学校把机器弄坏了”这句话，被父母知道，被老师知道，被同学知道，便已足够叫我几夜睡不着觉。</p>
+                    <p>况且我还在团校学习。团校学习原是一件很“向上”的事。老师们常说，这是培养，这是进步，这是思想上的要求高于一般同学。我平时也尽力把自己收拾得像个老实人，作业不敢拖，值日不敢懒，课堂上不敢过分放肆，仿佛只要谨慎一些，便能在那种无形的评判里保住一个还算端正的形象。可那一刻，我忽然觉得这一切都完了。机器黑着脸躺在那里，我便仿佛看见一张处分通知单也黑着脸躺在我面前，上面写着“擅自动用学校设备，操作不当，造成损坏”；又仿佛看见团校老师皱着眉头，问我：你平时不是很稳重的吗，怎么这样毛躁？这些画面也许并不会真的出现，却在我脑子里排着队走出来，一个比一个真。</p>
+                    <p>我站在那台一体机前，忽然觉得自己很小，小得像一粒被粘在桌角的灰。</p>
+                    <p>先前拉我来的人，这时也有些慌了，却还强作镇定，说：“不会吧？刚才不还好好的？”这句话在平时听来原无恶意，此刻却像一种推卸。是的，刚才原是好好的；可现在坏了，而动乎的是我。于是事情像是一盘脏水，谁离得近，谁便先湿。我张了张嘴，竟不知该说什么，只觉得嗓子发干。屋里别的人们但说笑、走动、按键盘，世界似乎并没有因为我这里的一块黑屏而停下来；可于我，那几分钟却像被单独拎出来，放在火上慢慢烤。脸上发热，背上发冷，膝盖竟也有些发软。若有人那时问我一句话，我想我大约会立刻露出破绽来。</p>
+                    
+                    <!-- 第四章 -->
+                    <h2 id="teacher-rescue">四、电教老师的到来与转机</h2>
+                    <p>后来不知是谁去叫了电教老师。</p>
+                    <p>等待电教老师来的那一段时间，是我那天下午最漫长的时辰。平常几分钟，在这时竟像拉长了好几倍。我站也不是，坐也不是，手不知该往哪里放，眼睛也不知该看哪里，只好盯着那黑屏发呆。它越黑，我越觉得自己前途也有些发黑。脑子里乱得很，一会儿想到赔多少钱，一会儿想到会不会全校通报，一会儿想到团校学习是不是也要受影响；又忽然想起父母若被请来学校，会怎样看我。平日里我总觉得自己还算谨慎，不至于拿出什么大招，至多不过是嘴上小事偶尔冒出一二，谁知真出了事，才发现自己那么“还算谨慎”，原来也并不牢靠，一急起来，照样会把事情往更坏处推。</p>
+                    <p>不久，电教蔡老师来了。蔡老师姓蔡，平时在学校里并不常成为学生议论的中心。他不像语文老师那样常在讲台上抒情，也不像班主任那样一天到晚巡查，更不像教导主任那样名字里自带几分威严。他多数时候是安静的，像一把放在柜子里的工具，不大显眼，却总在紧要处才被人想起。可在我那时的眼里，他几乎带着一种审判者与控教者合而为一的光。我一见他来，心里先是一沉，像犯错的人终于等到了来收拾现场的人；继而又生出一点极渺茫的盼望，仿佛死刑犯忽听说上面还要复核一遍。</p>
+                    <p>他问怎么回事。我便老老实实说了。删垃圾软件，删到一半卡死，着急，拔了电源，又插回去，然后就黑了。我说这些时，声音大模不登稳，却是自己把它弄坏了。说完，他又看了我一眼，那眼神里并没有我先前设想的厉色，倒有一点见惯不惊的平淡，仿佛他平时看多了学生把小故障想成大祸的样子，早不稀奇。机器重新活转来以后，他又处理了几下，确认无误，便让人以后别乱折腾，有问题先找老师。</p>
+                    <p>然后，我却先是虚脱，继而发热，最后竟生出一点想笑的荒唐。并非真高兴得相信自己的眼睛，仿佛刚才已经盖上白布的人，忽然自己掀开布坐了起来。开机画面慢慢显出来，冷冷地照着我的脸。我先是怔住，接着便觉得胸口那块压了许久的石头，忽然“咚”地一声滚落下去，落得我整个人都虚软了。原来它并没有死；真正快要被吓死的，倒是我。</p>
+                    
+                    <!-- 第五章 -->
+                    <h2 id="reflection">五、虚惊一场后的醒悟</h2>
+                    <p>他这一句“别乱折腾”，分量其实并不重，甚至算不上训斥；可落到我耳里，却比真正厉声斥责还叫人发热。因为他刚才是为了要让我好好想想，而不是为了要让我好好想想。</p>
+                    <p>我站在那台重新亮起屏幕的一体机前，终于明白那场黑屏的几分钟里，真正“断了电”的并不是机器，而是我自己被恐惧和慌张搅乱的全部心智。那些关于处分、赔款、通报、丢脸的念头，比任何病毒软件都更猛烈地占据了大脑。原来最可怕的不是机器死机，而是一个人面对意外时，先自己吓死了自己。</p>
+                    <p>从那以后，每次路过那台一体机，我都会想起那天下午灰蒙蒙的天色，想起自己拔下电源线那一瞬间的“聪明”，也想起蔡老师平淡的语气里蕴着的宽容。所谓成长，或许就是学着在机器卡死的时候，不去拔那根不该拔的电源；在人生卡住的时候，不急急忙忙按下错误的重启键。</p>
+                </div>
+
+                <!-- 文章结尾可加版权声明（可选，不作强制） -->
+                <div class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500">
+                    <p>本文由真实校园经历记录改编</p>
+                </div>
+            </article>
+
+            
+        </div>
+    </div>
+
+    <!-- ═══════════════ 页脚（替换版权信息与年份） ═══════════════ -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <p>© 2026 安卓学校非官方</p>
+            
+        </div>
+    </footer>
+
+    <!-- 简单的目录高亮脚本 (保留原有优雅体验) -->
+    <script>
+        (function() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = Array.from(tocLinks).map(link => {
+                const id = link.getAttribute('href').substring(1);
+                return document.getElementById(id);
+            }).filter(Boolean);
+            
+            function updateActiveLink() {
+                let currentIndex = -1;
+                const scrollPos = window.scrollY + 150; // 偏移量
+                for (let i = 0; i < sections.length; i++) {
+                    const section = sections[i];
+                    if (section && section.offsetTop <= scrollPos) {
+                        currentIndex = i;
+                    } else {
+                        break;
+                    }
+                }
+                tocLinks.forEach((link, idx) => {
+                    if (idx === currentIndex) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('resize', updateActiveLink);
+            updateActiveLink();
+        })();
+    </script>
+</body>
+</html>
