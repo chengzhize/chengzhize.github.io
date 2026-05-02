@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何使用 GitHub Pages 搭建个人博客 - 我的笔记</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance {
+                text-wrap: balance;
+            }
+            .prose-custom {
+                @apply max-w-none text-gray-800 dark:text-gray-200 leading-relaxed;
+            }
+            .prose-custom h2 {
+                @apply text-2xl font-bold mt-10 mb-4 scroll-mt-20;
+            }
+            .prose-custom h3 {
+                @apply text-xl font-semibold mt-8 mb-3 scroll-mt-20;
+            }
+            .prose-custom p {
+                @apply mb-4;
+            }
+            .prose-custom ul, .prose-custom ol {
+                @apply mb-4 pl-6;
+            }
+            .prose-custom li {
+                @apply mb-2;
+            }
+            .prose-custom code {
+                @apply bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono;
+            }
+            .prose-custom pre {
+                @apply bg-gray-800 rounded-lg p-4 overflow-x-auto mb-6;
+            }
+            .prose-custom pre code {
+                @apply bg-transparent p-0 text-gray-200;
+            }
+            .toc-link {
+                @apply block py-1 px-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-400;
+            }
+            .toc-link.active {
+                @apply bg-blue-50 dark:bg-blue-900/30 text-primary font-medium;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/bkog/" class="text-xl font-bold text-primary">返回</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-primary transition-colors">安卓学校官网</a></li>
+                    <li><a href="/blog/about.html" class="hover:text-primary transition-colors">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- 文章内容 -->
+            <article class="lg:w-3/4">
+                <!-- 文章头部 -->
+                <div class="mb-8">
+                    <a href="index.html" class="inline-flex items-center text-primary hover:underline mb-4">
+                        ← 返回目录
+                    </a>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4 text-balance">如何使用 GitHub Pages 搭建个人博客</h1>
+                    <div class="flex items-center text-gray-500 dark:text-gray-400">
+                        <span>发布于 2026-05-02</span>
+                        <span class="mx-2">•</span>
+                        <span>阅读时间：5 分钟</span>
+                    </div>
+                </div>
+
+                <!-- 文章正文 -->
+                <div class="prose-custom bg-white dark:bg-gray-800 rounded-lg p-6 md:p-8 shadow-sm">
+                    <p>
+                        GitHub Pages 是 GitHub 提供的一项免费静态网站托管服务，非常适合用来搭建个人博客、项目文档或作品集网站。本文将详细介绍如何从零开始，使用 GitHub Pages 搭建一个完全免费的个人博客。
+                    </p>
+
+                    <h2 id="step1">第一步：创建 GitHub 仓库</h2>
+                    <p>
+                        首先，你需要一个 GitHub 账号。如果你还没有，可以去 <a href="https://github.com" class="text-primary hover:underline" target="_blank">GitHub 官网</a> 免费注册一个。
+                    </p>
+                    <ol>
+                        <li>登录 GitHub 后，点击右上角的 "+" 号，选择 "New repository"</li>
+                        <li>仓库名称必须为 <code>你的用户名.github.io</code></li>
+                        <li>选择 "Public"（公开仓库）</li>
+                        <li>勾选 "Add a README file"</li>
+                        <li>点击 "Create repository"</li>
+                    </ol>
+
+                    <h2 id="step2">第二步：创建第一个页面</h2>
+                    <p>
+                        仓库创建完成后，我们来创建第一个 HTML 页面。
+                    </p>
+                    <ol>
+                        <li>点击仓库页面上的 "Add file" 按钮，选择 "Create new file"</li>
+                        <li>文件名输入 <code>index.html</code></li>
+                        <li>在内容区域输入以下代码：</li>
+                    </ol>
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;我的第一个 GitHub Pages 网站&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello, GitHub Pages!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <p>
+                        然后点击页面底部的 "Commit new file" 按钮提交代码。
+                    </p>
+
+                    <h2 id="step3">第三步：启用 GitHub Pages</h2>
+                    <p>
+                        现在我们需要启用 GitHub Pages 服务：
+                    </p>
+                    <ol>
+                        <li>点击仓库页面上的 "Settings" 标签</li>
+                        <li>在左侧导航栏中找到 "Pages" 选项</li>
+                        <li>在 "Build and deployment" 部分，将 "Source" 设置为 "Deploy from a branch"</li>
+                        <li>将 "Branch" 设置为 "main" 分支，文件夹选择 "/ (root)"</li>
+                        <li>点击 "Save" 按钮</li>
+                    </ol>
+                    <p>
+                        等待几分钟，GitHub 就会自动部署你的网站。部署完成后，你就可以通过 <code>https://你的用户名.github.io</code> 访问你的网站了。
+                    </p>
+
+                    <h2 id="step4">第四步：配置自定义域名</h2>
+                    <p>
+                        如果你有自己的域名，可以将它配置到 GitHub Pages 上：
+                    </p>
+                    <ol>
+                        <li>在域名注册商那里，将域名的 DNS 解析指向 GitHub Pages 的服务器</li>
+                        <li>在 GitHub 仓库的 "Settings" → "Pages" 页面，找到 "Custom domain" 部分</li>
+                        <li>输入你的自定义域名，点击 "Save"</li>
+                        <li>勾选 "Enforce HTTPS" 选项，开启 HTTPS</li>
+                    </ol>
+
+                    <h2 id="conclusion">总结</h2>
+                    <p>
+                        恭喜你！你已经成功搭建了一个基于 GitHub Pages 的个人博客。接下来，你可以继续完善你的网站，添加更多的文章和功能。
+                    </p>
+                    <p>
+                        GitHub Pages 不仅免费，而且非常稳定，是搭建个人博客的绝佳选择。希望这篇文章对你有所帮助！
+                    </p>
+                </div>
+            </article>
+
+            <!-- 侧边栏目录 -->
+            <aside class="lg:w-1/4 hidden lg:block">
+                <div class="sticky top-24 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">文章目录</h3>
+                    <nav class="space-y-1">
+                        <a href="#step1" class="toc-link active">第一步：创建 GitHub 仓库</a>
+                        <a href="#step2" class="toc-link">第二步：创建第一个页面</a>
+                        <a href="#step3" class="toc-link">第三步：启用 GitHub Pages</a>
+                        <a href="#step4" class="toc-link">第四步：配置自定义域名</a>
+                        <a href="#conclusion" class="toc-link">总结</a>
+                    </nav>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-400">
+            <p>&copy; 2026 安卓学校非官方. 基于 GitHub Pages 构建</p>
+        </div>
+    </footer>
+
+    <!-- 目录高亮脚本 -->
+    <script>
+        // 监听滚动，高亮当前目录项
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const sections = document.querySelectorAll('h2[id], h3[id]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
