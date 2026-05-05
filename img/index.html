@@ -1,1 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>图片预览</title>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text: #1d1d1f;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.14);
+            --radius: 14px;
+            --gap: 10px;
+            --overlay-bg: rgba(0, 0, 0, 0.92);
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+                'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 16px var(--gap);
+            padding-bottom: 40px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 顶部标题 */
+        .header {
+            text-align: center;
+            padding: 18px 0 14px;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #1d1d1f;
+        }
+        .header .subtitle {
+            font-size: 0.85rem;
+            color: #86868b;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* 图片网格 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--gap);
+            padding: 0 2px;
+        }
+
+        /* 图片卡片 */
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #e8e8ed;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .gallery-item:active {
+            transform: scale(0.96);
+            box-shadow: var(--shadow-hover);
+        }
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.04);
+        }
+
+        /* 遮罩层 */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay-bg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-smooth);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 大图容器 */
+        .lightbox-image-wrap {
+            position: relative;
+            max-width: 94vw;
+            max-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0.88);
+            transition: transform var(--transition-smooth);
+        }
+        .lightbox.active .lightbox-image-wrap {
+            transform: scale(1);
+        }
+        .lightbox-image-wrap img {
+            max-width: 94vw;
+            max-height: 82vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        /* 关闭按钮 */
+        .lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            transition: background var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .lightbox-close:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lightbox-close::before,
+        .lightbox-close::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 1px;
+        }
+        .lightbox-close::before {
+            transform: rotate(45deg);
+        }
+        .lightbox-close::after {
+            transform: rotate(-45deg);
+        }
+
+        /* 底部提示 */
+        .lightbox-hint {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .lightbox.active .lightbox-hint {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部 -->
+    <div class="header">
+        <h1>分享图片集</h1>
+        <p class="subtitle">点击图片放大预览</p>
+    </div>
+
+    <!-- 图片网格 -->
+    <div class="gallery" id="gallery"></div>
+
+    <!-- 放大遮罩层 -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="关闭"></button>
+        <div class="lightbox-image-wrap">
+            <img src="" alt="预览大图" id="lightboxImg" />
+        </div>
+        <span class="lightbox-hint">点击空白处关闭</span>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================
+            // 📌 在这里轻松添加/修改图片
+            //    支持本地路径或在线URL
+            // ============================================
+            const imageList = [
+                {
+                    src: 'fa.jpg',
+                    alt: '伐胜',
+						
+                },
+					{
+                    src:'tiwei.png',
+                    alt: '体委',
+						
+                },  
+					{
+                    src:'zf.png',
+                    alt: '张飞',
+						
+                },  
+					{
+                    src:'xbz.jpg',
+                    alt: '小辫子',
+						
+                },  
+                {
+                    src: 'fa2.png',
+                    alt: 'fa2',
+                }
+            ];
+
+            // ============================================
+            // 获取DOM元素
+            // ============================================
+            const gallery = document.getElementById('gallery');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            // ============================================
+            // 渲染图片网格
+            // ============================================
+            function renderGallery() {
+                gallery.innerHTML = '';
+                imageList.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'gallery-item';
+                    div.setAttribute('data-index', index);
+
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.alt = item.alt || '图片';
+                    img.loading = 'lazy';
+                    img.draggable = false;
+
+                    // 图片加载失败时显示占位色块
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                        div.style.background =
+                            'linear-gradient(135deg, #e0e0e0 0%, #c8c8d0 100%)';
+                        const fallback = document.createElement('span');
+                        fallback.textContent = '🖼️';
+                        fallback.style.cssText =
+                            'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;pointer-events:none;';
+                        div.appendChild(fallback);
+                    };
+
+                    div.appendChild(img);
+                    div.addEventListener('click', () => openLightbox(index));
+                    gallery.appendChild(div);
+                });
+            }
+
+            // ============================================
+            // 打开灯箱
+            // ============================================
+            function openLightbox(index) {
+                const item = imageList[index];
+                if (!item) return;
+
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.alt || '预览大图';
+                lightbox.classList.add('active');
+
+                // 阻止body滚动
+                document.body.style.overflow = 'hidden';
+            }
+
+            // ============================================
+            // 关闭灯箱
+            // ============================================
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+
+                // 延迟清除图片src，释放内存（可选）
+                setTimeout(() => {
+                    if (!lightbox.classList.contains('active')) {
+                        lightboxImg.src = '';
+                    }
+                }, 350);
+            }
+
+            // ============================================
+            // 事件绑定
+            // ============================================
+            lightboxClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            // 点击遮罩空白区域关闭
+            lightbox.addEventListener('click', (e) => {
+                // 如果点击的是遮罩本身（不是图片或关闭按钮）
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // 手势：下滑关闭（简单的触摸检测）
+            let touchStartY = 0;
+            lightbox.addEventListener('touchstart', (e) => {
+                if (e.target === lightbox || e.target === lightboxImg) {
+                    touchStartY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', (e) => {
+                if (e.target === lightbox || e.target === lightboxImg) {
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const diff = touchEndY - touchStartY;
+                    // 下滑超过80px关闭
+                    if (diff > 80) {
+                        closeLightbox();
+                    }
+                }
+            });
+
+            // 键盘ESC关闭
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+
+            // ============================================
+            // 启动
+            // ============================================
+            renderGallery();
+            console.log(
+                `✅ 图片预览已就绪，共 ${imageList.length} 张图片。\n` +
+                '💡 修改 imageList 数组即可轻松添加/替换图片。'
+            );
+        })();
+    </script>
+</body>
+</html>
