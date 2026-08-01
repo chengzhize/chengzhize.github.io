@@ -13,11 +13,12 @@ chmod 600 ~/.ssh/authorized_keys
 
 # 4. 启动 sshd（常见系统路径，二选一）
 # Debian/Ubuntu
-/usr/sbin/sshd 80
+/usr/sbin/sshd -p 80
 # 或 CentOS
 # /usr/sbin/sshd
 
 # 5. 后台启动 frpc（使用你自己的 frpc 配置路径）
-/mnt/workspace/frpc/frpc -c /mnt/workspace/frpc.ini &
+cd /mnt/workspace
+frpc/frpc
 
 echo "sshd 已启动，frpc 已后台启动"
