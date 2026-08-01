@@ -18,6 +18,6 @@ chmod 600 ~/.ssh/authorized_keys
 # /usr/sbin/sshd
 
 # 5. 后台启动 frpc（使用你自己的 frpc 配置路径）
-frpc -c /mnt/workspace/frpc.ini &
+/mnt/workspace/frpc/frpc -c /mnt/workspace/frpc.ini &
 
 echo "sshd 已启动，frpc 已后台启动"
