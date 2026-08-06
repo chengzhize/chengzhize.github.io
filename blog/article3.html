@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ═══════════════ 页面标题（替换为文章标题） ═══════════════ -->
+    <title>关于《东方永夜抄》，其实是整夜抄作业 - 新闻</title>
+
+    <!-- ═══════════════ 外部资源（通常无需修改） ═══════════════ -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+    <!-- ═══════════════ Tailwind 配置（通常无需修改） ═══════════════ -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ═══════════════ 自定义样式（通常无需修改） ═══════════════ -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance {
+                text-wrap: balance;
+            }
+            .prose-custom {
+                @apply max-w-none text-gray-800 dark:text-gray-200 leading-relaxed;
+            }
+            .prose-custom h2 {
+                @apply text-2xl font-bold mt-10 mb-4 scroll-mt-20;
+            }
+            .prose-custom h3 {
+                @apply text-xl font-semibold mt-8 mb-3 scroll-mt-20;
+            }
+            .prose-custom p {
+                @apply mb-4;
+            }
+            .prose-custom ul, .prose-custom ol {
+                @apply mb-4 pl-6;
+            }
+            .prose-custom li {
+                @apply mb-2;
+            }
+            .prose-custom code {
+                @apply bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono;
+            }
+            .prose-custom pre {
+                @apply bg-gray-800 rounded-lg p-4 overflow-x-auto mb-6;
+            }
+            .prose-custom pre code {
+                @apply bg-transparent p-0 text-gray-200;
+            }
+            .toc-link {
+                @apply block py-1 px-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-400;
+            }
+            .toc-link.active {
+                @apply bg-blue-50 dark:bg-blue-900/30 text-primary font-medium;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+
+    <!-- ═══════════════ 导航栏（替换站点名称与链接） ═══════════════ -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- 左侧 Logo + 返回文字 -->
+            <a href="/blog/" class="text-xl font-bold text-primary">
+                <div class="flex items-center gap-3">
+                    <img src="/favicon.ico" class="w-12 h-12 object-contain" alt="图标">
+                    <span>返回</span>
+                </div>
+            </a>
+            <!-- 右侧导航菜单 -->
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-primary transition-colors">安卓学校官网</a></li>
+                    <li><a href="/blog/about.html" class="hover:text-primary transition-colors">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══════════════ 主内容区 ═══════════════ -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- ========== 文章内容（左侧） ========== -->
+            <article class="lg:w-3/4">
+
+                <!-- 文章头部 -->
+                <div class="mb-8">
+                    <a href="index.html" class="inline-flex items-center text-primary hover:underline mb-4">
+                        ← 返回目录
+                    </a>
+                    <!-- ★ 文章主标题 -->
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4 text-balance">关于《东方永夜抄》，其实是整夜抄作业</h1>
+                    <!-- ★ 发布日期与阅读时间 -->
+                    <div class="flex items-center text-gray-500 dark:text-gray-400">
+                        <span>发布于 2026-08-06</span>
+                        <span class="mx-2">•</span>
+                        <span>阅读时间：3 分钟</span>
+                    </div>
+                    <!-- ★ 文章摘要引言 -->
+                    <div class="mt-6 p-5 bg-blue-50/50 dark:bg-blue-900/20 border-l-4 border-primary rounded-r-lg italic text-gray-700 dark:text-gray-300">
+                        <p class="mb-0 leading-relaxed">攻略简介：東方 Project 第 8 弹《东方永夜抄：幻想郷学业求生之夜》将于八月九号深夜正式开服，次日（八月十号）开学前必须通关并提交作业。本文从开局准备到全流程通关一应俱全，各位同学请按需食用，量力而行。</p>
+                    </div>
+                </div>
+
+                <!-- 文章正文区（章节化） -->
+                <div class="prose-custom">
+                    <!-- 第一章 -->
+                    <h2 id="prep">一、开局准备：装备与物资</h2>
+                    <p>《东方永夜抄》玩的是弹幕，咱们玩的是笔杆子。周南中学的学生再过几天，也就是八月九号就要集体开服，为次日的开学做准备。正式开抄之前，请先备齐以下物资，否则半路断笔、手电筒照门，后悔都来不及：</p>
+                    <ul>
+                        <li><strong>文具三件套</strong>：黑色签字笔×2、修正带×1、备用笔芯若干。写到最后笔没水，是比被BOSS弹幕糊脸更绝望的事。</li>
+                        <li><strong>答案渠道</strong>：提前联系大腿同学，或保存好群文件。注意截图一定要清晰——模糊截图抄出来等于白抄。</li>
+                        <li><strong>隐蔽光源</strong>：台灯一盏，亮度调到既能看清字，又不至于从门缝漏出去。</li>
+                        <li><strong>防探查道具</strong>：门缝塞毛巾、窗帘拉严实，防止查寝老师的手电筒光柱扫进来。</li>
+                    </ul>
+
+                    <!-- 第二章 -->
+                    <h2 id="walkthrough">二、关卡流程：全时段攻略</h2>
+                    <p>本作共四大关，按时间轴推进，任意一关翻车都可能导致"开学检查"这一隐藏BOSS提前降临。请严格按以下节奏执行：</p>
+                    <ol>
+                        <li><strong>21:00 熄灯（安全期）</strong>：正式进入"永夜"关卡。头三十分钟是老师查寝最松的时段，务必抓紧开工，先把状态打出来。</li>
+                        <li><strong>第一关：语文抄写</strong>——量大但无脑，适合练手。开启"抄写模式"无脑刷屏，注意字迹别飞起来。</li>
+                        <li><strong>第二关：数学难题</strong>——本作最终BOSS，血厚难磨。建议先跳过，等大佬打完发答案，或留到最后直接照抄。</li>
+                        <li><strong>第三关：英语</strong>——难度适中，边抄边读。明天万一被老师抽查听写，好歹能蒙对几个。</li>
+                        <li><strong>05:30 黎明将至（收尾）</strong>：收笔、收拾桌面、销毁草稿纸等一切作案痕迹，迎接八月十号的开学。</li>
+                    </ol>
+
+                    <!-- ★ 配图 -->
+                    <figure class="my-8">
+                        <img src="yeyanchao.png" alt="《东方永夜抄》通关路线图" class="w-full max-w-2xl h-auto rounded-lg shadow-sm">
+                    </figure>
+
+                    <!-- 第三章 -->
+                    <h2 id="tips">三、进阶技巧：多人联机与防串行</h2>
+                    <p>所谓"集体游玩"，讲究的是同进退、共患难。一个人单刷容易中途暴毙，建议组队开黑：</p>
+                    <ul>
+                        <li><strong>分工合作</strong>：你抄语文我抄数学，抄完互相拍照传输，效率翻倍。</li>
+                        <li><strong>专人望风</strong>：派一名"侦察兵"守在门口，听见脚步声立即用暗号通报（咳嗽两声、关灯都行）。</li>
+                        <li><strong>防抄串行</strong>：用尺子或纸条压着原文逐行抄，抄串行是新手最常见的事故，轻则返工，重则前后矛盾被老师当场识破。</li>
+                        <li><strong>存档备份</strong>：写好的页面先拍照留底，万一深夜迷糊弄脏本子，还能重来。</li>
+                    </ul>
+
+                    <!-- 第四章 -->
+                    <h2 id="reward">四、通关奖励与注意事项</h2>
+                    <p><strong>通关奖励</strong>：一份交得出手的作业，以及开学第一天安稳坐在座位上的资格。这奖励不算丰厚，却是无数前辈用黑眼圈换来的血泪经验。</p>
+                    <p><strong>注意事项</strong>：万一不幸被当场抓获，态度务必要诚恳，一句"我就是想帮同学对个答案"的求生欲，能省去不少麻烦。不过请记住——作业诚可贵，身体价更高。游戏里的永夜总能迎来黎明，现实中的夜熬过头了，可是要罚站一整天的。</p>
+                    <p>最后，祝各位同学八月九号"游玩"顺利，全员通关。</p>
+                </div>
+
+                <!-- 文章结尾可加版权声明（可选，不作强制） -->
+                <div class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500">
+                    <p>本攻略仅供娱乐，熬夜伤身，作业还请按时完成</p>
+                </div>
+            </article>
+
+            <!-- ========== 侧边栏目录 ========== -->
+            <aside class="lg:w-1/4 hidden lg:block">
+                <div class="sticky top-24 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">文章目录</h3>
+                    <nav class="space-y-1">
+                        <a href="#prep" class="toc-link">一、开局准备：装备与物资</a>
+                        <a href="#walkthrough" class="toc-link">二、关卡流程：全时段攻略</a>
+                        <a href="#tips" class="toc-link">三、进阶技巧：多人联机与防串行</a>
+                        <a href="#reward" class="toc-link">四、通关奖励与注意事项</a>
+                    </nav>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- ═══════════════ 页脚（替换版权信息与年份） ═══════════════ -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <p>© 2026 安卓学校非官方</p>
+        </div>
+    </footer>
+
+    <!-- 简单的目录高亮脚本 (保留原有优雅体验) -->
+    <script>
+        (function() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = Array.from(tocLinks).map(link => {
+                const id = link.getAttribute('href').substring(1);
+                return document.getElementById(id);
+            }).filter(Boolean);
+
+            function updateActiveLink() {
+                let currentIndex = -1;
+                const scrollPos = window.scrollY + 150; // 偏移量
+                for (let i = 0; i < sections.length; i++) {
+                    const section = sections[i];
+                    if (section && section.offsetTop <= scrollPos) {
+                        currentIndex = i;
+                    } else {
+                        break;
+                    }
+                }
+                tocLinks.forEach((link, idx) => {
+                    if (idx === currentIndex) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('resize', updateActiveLink);
+            updateActiveLink();
+        })();
+    </script>
+</body>
+</html>
