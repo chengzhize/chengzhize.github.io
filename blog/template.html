@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ═══════════════ 页面标题（替换为文章标题） ═══════════════ -->
-    <title>周南中学一学生在防卫过程中持刀刺伤一人 - 新闻</title>
+    <!-- [填写] 页面标题格式：文章标题 - 新闻 -->
+    <title>文章标题 - 新闻</title>
 
     <!-- ═══════════════ 外部资源（通常无需修改） ═══════════════ -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -80,7 +80,7 @@
     <!-- ═══════════════ 导航栏（通常无需修改） ═══════════════ -->
     <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <!-- 左侧 Logo + 返回文字 -->
+            <!-- 左侧 Logo + 返回文字（链接到博客目录） -->
             <a href="/blog/" class="text-xl font-bold text-primary">
                 <div class="flex items-center gap-3">
                     <img src="/favicon.ico" class="w-12 h-12 object-contain" alt="图标">
@@ -101,7 +101,7 @@
     <div class="container mx-auto px-4 py-12">
         <div class="flex flex-col lg:flex-row gap-8">
 
-            <!-- ========== 文章内容（左侧） ========== -->
+            <!-- ========== 文章内容（左侧，占 3/4 宽） ========== -->
             <article class="lg:w-3/4">
 
                 <!-- 文章头部 -->
@@ -109,61 +109,70 @@
                     <a href="index.html" class="inline-flex items-center text-primary hover:underline mb-4">
                         ← 返回目录
                     </a>
-                    <!-- ★ 文章主标题 -->
-                    <h1 class="text-3xl md:text-4xl font-bold mb-4 text-balance">周南中学一学生在防卫过程中持刀刺伤一人</h1>
-                    <!-- ★ 发布日期与阅读时间 -->
+                    <!-- ★ [填写] 文章主标题（与 <title> 保持一致） -->
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4 text-balance">文章标题</h1>
+                    <!-- ★ [填写] 发布日期与阅读时间 -->
                     <div class="flex items-center text-gray-500 dark:text-gray-400">
-                        <span>发布于 2026-05-03</span>
+                        <span>发布于 YYYY-MM-DD</span>
                         <span class="mx-2">•</span>
-                        <span>阅读时间：3 分钟</span>
+                        <span>阅读时间：X 分钟</span>
+                    </div>
+                    <!-- ★ [可选] 摘要引言块：蓝底左边框，italic 字体。若文章有摘要/引子则保留，否则整个 div 删除 -->
+                    <div class="mt-6 p-5 bg-blue-50/50 dark:bg-blue-900/20 border-l-4 border-primary rounded-r-lg italic text-gray-700 dark:text-gray-300">
+                        <p class="mb-0 leading-relaxed">摘要：这里写一段概括文章内容的话，让读者点开前先了解大意。</p>
                     </div>
                 </div>
 
-                <!-- 文章正文区（章节化） -->
+                <!-- 文章正文区（章节化，每章一个 h2 + id） -->
                 <div class="prose-custom">
-                    <p>
-                        2026年4月23日，长沙市周南中学发生一起学生持刀伤人事件，引发广泛关注。本文整理了目前公开的事件相关情况。
-                    </p>
+                    <!-- [填写] 第一章：h2 的 id 用于侧边栏目录锚点，必须与 aside 中 toc-link 的 href 一一对应 -->
+                    <h2 id="section-1">一、章节标题</h2>
+                    <p>正文段落文字。正文使用 .prose-custom 样式：h2 章节标题、h3 小节标题、p 段落、ul/ol 列表、行内 code、pre 代码块均已内置样式，直接使用即可。</p>
 
-                    <!-- 第一章 -->
-                    <h2 id="event">一、事件基本经过</h2>
-                    <p>
-                        二零二六年四月二十三日，在周南中学第六节课课间时间（即北京时间十五时许），犯罪嫌疑人周某在周南中学唯勇楼三楼走廊处持一柄美工刀刺伤一名女生。伤者现已被紧急送往医院救治，官方宣称伤者伤情现已稳定。
-                    </p>
+                    <h2 id="section-2">二、列表与引用示例</h2>
+                    <p>无序列表示例：</p>
+                    <ul>
+                        <li><strong>加粗要点</strong>：说明文字。</li>
+                        <li>普通条目。</li>
+                    </ul>
+                    <p>有序列表示例：</p>
+                    <ol>
+                        <li>第一步。</li>
+                        <li>第二步。</li>
+                    </ol>
 
-                    <!-- 第二章 -->
-                    <h2 id="cause">二、冲突起因</h2>
-                    <p>
-                        据知情人士透露，二人皆为高二十四班学生。此次冲突的起因是双方在交流更换座位的问题过程中爆发激烈矛盾，进而升级为肢体打斗。女生在打斗中以裸绞的方式扼住了周某的颈部，于是周某在身旁的课桌上抄起一柄美工刀，连刺对方的肩部与侧腹，最终导致女生被送往医院接受救治。
-                    </p>
+                    <!-- [可选] 提示块：绿底左边框（用于补给站/提示/重点），整块删除即移除 -->
+                    <div class="mt-6 p-5 bg-emerald-50/60 dark:bg-emerald-900/20 border-l-4 border-emerald-500 rounded-r-lg">
+                        <p class="mb-0 leading-relaxed"><strong>提示：</strong>这里放重要提示或补充信息，可内含 <a href="/answer/index.html" class="text-primary hover:underline">链接</a>。</p>
+                    </div>
 
-                    <!-- 第三章 -->
-                    <h2 id="impact">三、事件后续影响</h2>
-                    <p>
-                        据悉，周南中学近日刚发生校长、教务处主任等多名行政教师的人事调动，同时周南中学正在申报“全国文明校园”称号。该事件的流出，恐将对新校长的工作开展以及周南中学的全国文明校园申报工作带来一定影响。
-                    </p>
+                    <!-- [可选] 代码块：语言类 class="language-xxx"，PrismJS 负责高亮。仅当文章含代码时保留 -->
+                    <pre><code class="language-python">print("Hello, World!")</code></pre>
 
-                    <!-- 第四章 -->
-                    <h2 id="response">四、学校官方回应</h2>
-                    <p>
-                        某学生在接受采访中提及，周南中学在事后通过校园广播向全体学生通报了情况。广播中强调，此次事件“只是划伤”、“女同学无生命危险”，并着重提及了“不要在网络平台散布不实言论”。
-                    </p>
+                    <!-- [可选] 配图：figure + img，src 用相对路径指向图片文件，alt 必填 -->
+                    <figure class="my-8">
+                        <img src="example.png" alt="配图说明" class="w-full max-w-2xl h-auto rounded-lg shadow-sm">
+                    </figure>
 
-                    <p>
-                        目前，事件的具体调查结果及后续处理措施尚未正式公布，相关情况仍在进一步核实中。
-                    </p>
+                    <h2 id="conclusion">三、总结</h2>
+                    <p>结尾段落。</p>
+                </div>
+
+                <!-- [可选] 结尾声明：版权/免责/改编说明，不需要则整块删除 -->
+                <div class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500">
+                    <p>本文由真实经历记录改编 / 仅供娱乐</p>
                 </div>
             </article>
 
-            <!-- ========== 侧边栏目录 ========== -->
+            <!-- ========== 侧边栏目录（右侧，占 1/4 宽，仅大屏显示） ========== -->
             <aside class="lg:w-1/4 hidden lg:block">
                 <div class="sticky top-24 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
                     <h3 class="text-lg font-semibold mb-4 border-b pb-2">文章目录</h3>
+                    <!-- ★ [填写] 每个 toc-link 的 href 对应正文 h2 的 id，文字与章节标题一致 -->
                     <nav class="space-y-1">
-                        <a href="#event" class="toc-link">一、事件基本经过</a>
-                        <a href="#cause" class="toc-link">二、冲突起因</a>
-                        <a href="#impact" class="toc-link">三、事件后续影响</a>
-                        <a href="#response" class="toc-link">四、学校官方回应</a>
+                        <a href="#section-1" class="toc-link">一、章节标题</a>
+                        <a href="#section-2" class="toc-link">二、列表与引用示例</a>
+                        <a href="#conclusion" class="toc-link">三、总结</a>
                     </nav>
                 </div>
             </aside>
@@ -177,7 +186,7 @@
         </div>
     </footer>
 
-    <!-- 目录高亮脚本 -->
+    <!-- 目录高亮脚本（通常无需修改；无侧边栏时仍可保留，脚本对空列表安全） -->
     <script>
         (function() {
             const tocLinks = document.querySelectorAll('.toc-link');
