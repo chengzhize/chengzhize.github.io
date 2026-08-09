@@ -120,10 +120,11 @@
 <h2>数学3　函数的性质</h2>
 <p class="ans"><b>选择：</b>1.B　2.A　3.A　4.C　5.AD　6.AC　<b>填空：</b>7. $2n$　8. $(0,\tfrac23)$</p>
 <h3>7 填空</h3>
-<p class="step">$f(x)$ 图象关于直线 $x=2$ 对称</p>
-<p class="step">方程根成对关于 $x=2$</p>
-<p class="step">$\therefore\sum x_i=\frac n2\cdot4=2n$</p>
-<h3>9</h3>
+<p class="step">$f(x+2)$ 为偶函数 $\Rightarrow$ 其图象关于直线 $x=0$ 对称</p>
+<p class="step">向右平移 $2$ 个单位得 $f(x)$ 的图象 $\Rightarrow f(x)$ 图象关于直线 $x=2$ 对称</p>
+<p class="step">$y=|x^2-4x-5|=|(x-2)^2-9|$ 的图象也关于直线 $x=2$ 对称</p>
+<p class="step">$\therefore$ 两图象的交点（即方程根）成对出现，关于 $x=2$ 对称</p>
+<p class="step">$\because$ 共有 $n$ 个根 $\therefore\sum x_i=\dfrac n2\cdot4=2n$</p><h3>9</h3>
 <p class="step">$f(x)=x^3-3x^2$</p>
 <p class="step">设对称中心 $(a,b)$，令 $g(x)=f(x+a)-b$</p>
 <p class="step">$g$ 为奇函数 $\iff g(x)+g(-x)=0$ 恒成立</p>
@@ -190,10 +191,15 @@
 <p class="step">等号 $\iff e^y=e$（$y=1$，$x=1+\ln2$）</p>
 <p class="step">$\therefore (2x-y)_{\min}=1+2\ln2$</p>
 <h3>10</h3>
-<p class="step">$f$ 为偶函数 $\Rightarrow k=-1$</p>
-<p class="step">$f(x)=\log_3(3^x+3^{-x})$，偶函数且在 $x\ge0$ 递增</p>
-<p class="step">$\therefore$ 解集 $(-\log_37,\ -\log_32]$</p>
-<h3>11</h3>
+<p class="step">(1) $f(x)$ 为偶函数 $\Rightarrow f(-x)=f(x)$：</p>
+<p class="step">$\log_3(9^{-x}+1)-kx=\log_3(9^x+1)+kx$ 对任意 $x\in\mathbb R$ 恒成立</p>
+<p class="step">$\Rightarrow 2kx=\log_3\dfrac{9^{-x}+1}{9^x+1}=\log_33^{-2x}=-2x$</p>
+<p class="step">$\therefore k=-1$</p>
+<p class="step">(2) $f(x)=\log_3(9^x+1)-x=\log_3\dfrac{9^x+1}{3^x}=\log_3(3^x+3^{-x})$</p>
+<p class="step">$f(x)\ge\log_3(7\cdot3^x-1)\iff 3^x+3^{-x}\ge7\cdot3^x-1\gt0$</p>
+<p class="step">由 $7\cdot3^x-1\gt0$：$x\gt-\log_37$</p>
+<p class="step">由 $3^x+3^{-x}\ge7\cdot3^x-1$：$6(3^x)^2-3^x-1\le0\Rightarrow0\lt3^x\le\dfrac12$，即 $x\le-\log_32$</p>
+<p class="step">$\therefore$ 解集为 $(-\log_37,\,-\log_32]$</p><h3>11</h3>
 <p class="step">$f(0)=0\Rightarrow m=1$</p>
 <p class="step">$f(x)=\frac{2(2^x-1)}{2^x+1}$ 在 $\mathbb R$ 上单调递增</p>
 <p class="step">$|f(x)-\lambda|\le1$，$x\in[1,2]$</p>
@@ -215,10 +221,14 @@
 <p class="step">$x\gt0$：$\frac1x-1\ge2\Rightarrow0\lt x\le\frac13$</p>
 <p class="step">$\therefore$ 解集 $(-\infty,-\sqrt2]\cup(0,\frac13]$</p>
 <h3>10</h3>
-<p class="step">(2) 方程有解 $\iff -1\lt x=a-2\le1$</p>
+<p class="step">(1) 列表描点：$x:-2,-1,0,1,2$；$f(x):0,-1,0,1,0$</p>
+<p class="step">$\therefore$ 图象与 $x$ 轴交于三点 $A,O,B$（$f$ 有三个零点）</p>
+<p class="step">(2) 由(1)的图象，要使 $f(x)$ 在 $[-1,a-2]$ 上单调递增，需 $-1\lt a-2\le1$</p>
 <p class="step">$\therefore 1\lt a\le3$</p>
-<p class="step">(3) $\varphi(x)=f(x)-e^x$ 恰有一个零点</p>
-<h3>11</h3>
+<p class="step">(3) $\varphi(x)=f(x)-e^x$ 的零点即 $y=f(x)$ 与 $y=e^x$ 图象交点的横坐标</p>
+<p class="step">$y=e^x$ 在 $\mathbb R$ 上单调递增，值域为 $(0,+\infty)$</p>
+<p class="step">结合(1)的图象，两图象在 $(-\infty,0)$ 内恰有一个交点</p>
+<p class="step">$\therefore\varphi(x)$ 恰有一个零点</p><h3>11</h3>
 <p class="step">$g(x)=\log_2(x+2)$，$x\in[2,14]$ 递增</p>
 <p class="step">$g_{\min}=g(2)=\log_24=2$</p>
 <p class="step">需 $g_{\min}\ge3m-1$</p>
@@ -241,10 +251,13 @@
 <p class="step">$e^{-2x}\ge1$</p>
 <p class="step">$\therefore a\in[\ln2,+\infty)$</p>
 <h3>10</h3>
-<p class="step">平移后 $f(x)=1+\frac1{(x+2)^2}$</p>
-<p class="step">$g$ 一个零点为 $3\Rightarrow m=\frac{26}{25}$</p>
-<p class="step">另一零点 $x=-7$</p>
-<h3>11</h3>
+<p class="step">(1) $y=\dfrac1{x^2}$ 向左平移 $2$ 个单位：$y=\dfrac1{(x+2)^2}$</p>
+<p class="step">再向上平移 $1$ 个单位：$f(x)=1+\dfrac1{(x+2)^2}$</p>
+<p class="step">(2) $g(x)=f(x)-m=\dfrac1{(x+2)^2}+1-m$</p>
+<p class="step">$\because g(3)=0$：$\dfrac1{25}+1-m=0\Rightarrow m=\dfrac{26}{25}$</p>
+<p class="step">$\therefore g(x)=\dfrac1{(x+2)^2}-\dfrac1{25}$，令 $g(x)=0$：$(x+2)^2=25$</p>
+<p class="step">$\Rightarrow x=3$ 或 $x=-7$</p>
+<p class="step">$\therefore$ 另一零点为 $x=-7$</p><h3>11</h3>
 <p class="step">$f(x)=x^2-2x$</p>
 <p class="step">(2) $t=\log_2x\in[-1,3]$</p>
 <p class="step">$m\ge-2(t-1)^2+2$</p>
@@ -255,10 +268,12 @@
 <h2>数学8　导数的概念与导数的运算</h2>
 <p class="ans"><b>选择：</b>1.A　2.C　3.B　4.B　5.ABC　6.BC　<b>填空：</b>7. 12　8. 2021</p>
 <h3>9</h3>
-<p class="step">$f(e)=-1,\ f'(e)=-\frac1e$</p>
-<p class="step">切点横坐标 $x=e^2$</p>
-<p class="step">$\therefore$ 切线方程：$(2e-1)x+e^2y-e^2=0$</p>
-<h3>10</h3>
+<p class="step">(1) $f(x)=2xf'(e)+\ln x\Rightarrow f'(x)=2f'(e)+\dfrac1x$</p>
+<p class="step">令 $x=e$：$f'(e)=2f'(e)+\dfrac1e\Rightarrow f'(e)=-\dfrac1e$</p>
+<p class="step">$\therefore f(x)=-\dfrac{2x}{e}+\ln x$，$f(e)=-2+\ln e=-1$</p>
+<p class="step">(2) $f'(x)=-\dfrac2e+\dfrac1x$：$f'(e^2)=-\dfrac2e+\dfrac1{e^2}$，$f(e^2)=-2e+2$</p>
+<p class="step">切线方程：$y-(2-2e)=\left(-\dfrac2e+\dfrac1{e^2}\right)(x-e^2)$</p>
+<p class="step">化简得 $(2e-1)x+e^2y-e^2=0$</p><h3>10</h3>
 <p class="step">$a=3$</p>
 <p class="step">(2) 相切条件 $4a=9x_1^4-8x_1^3-6x_1^2+1$</p>
 <p class="step">$h(x)=9x^4-8x^3-6x^2+1$，值域 $[-4,+\infty)$</p>
@@ -288,10 +303,18 @@
 <p class="step">$y=x+1-\frac1{x+1}$ 在 $(-1,1)$ 递增，$y\to\frac32$（$x\to1^-$）</p>
 <p class="step">$\therefore a\ge\frac32$</p>
 <h3>11</h3>
-<p class="step">$f$ 在 $\left(\frac12,+\infty\right)$ 上递增（导数判定）</p>
-<p class="step">$\therefore m\gt\frac12$</p>
-
-<h2>数学10 导数与函数的极值、最值</h2>
+<p class="step">(1) $x\gt\dfrac12$ 时 $f'(x)=k(2x-e^{-kx})$，$(f'(x))'=k(2+ke^{-kx})\gt0$</p>
+<p class="step">$\therefore f'(x)$ 在 $\left(\dfrac12,+\infty\right)$ 上递增，$f'(x)\gt f'\left(\dfrac12\right)=k(1-e^{-\frac k2})\gt0$</p>
+<p class="step">$\therefore f(x)$ 在 $\left(\dfrac12,+\infty\right)$ 上单调递增</p>
+<p class="step">(2) $g(x)=f(x)+x^2-m\ln x=(k+1)x^2-m\ln x+e^{-kx}$</p>
+<p class="step">存在 $x_1\lt x_2\in\left(\dfrac12,+\infty\right)$ 使 $g(x_1)=g(x_2)$：</p>
+<p class="step">$m(\ln x_2-\ln x_1)=(k+1)(x_2^2-x_1^2)+(e^{-kx_2}-e^{-kx_1})$</p>
+<p class="step">由(1)，$f(x_2)\gt f(x_1)$，即 $e^{-kx_2}-e^{-kx_1}\gt-k(x_2^2-x_1^2)$</p>
+<p class="step">$\Rightarrow m(\ln x_2-\ln x_1)\gt x_2^2-x_1^2$</p>
+<p class="step">令 $\varphi(x)=2x-\ln x\ \left(x\gt\dfrac12\right)$：$\varphi'(x)=2-\dfrac1x=\dfrac{2x-1}{x}\gt0$</p>
+<p class="step">$\therefore\varphi(x_2)\gt\varphi(x_1)$，即 $\ln x_2-\ln x_1\lt2(x_2-x_1)$</p>
+<p class="step">$\Rightarrow m(\ln x_2-\ln x_1)\lt2m(x_2-x_1)$，结合上式：$2m(x_2-x_1)\gt x_2^2-x_1^2$</p>
+<p class="step">$\Rightarrow 2m\gt x_1+x_2\gt1$ $\therefore m\gt\dfrac12$</p><h2>数学10 导数与函数的极值、最值</h2>
 <p class="ans"><b>选择：</b>1.D　2.A　3.B　4.C　5.BCD　6.AC　<b>填空：</b>7. $(-1/(2e),1/e)$　8. 80</p>
 <h3>9</h3>
 <p class="step">$f'(x)=\frac{(2ax+3)(ax-1)}{x^2}$</p>
@@ -307,11 +330,26 @@
 <p class="step">$0\le a\le\frac e2$：无</p>
 <p class="step">$a\gt\frac e2$：一极大一极小</p>
 <h3>11</h3>
-<p class="step">$g$ 增 $(1,+\infty)$、减 $(0,1)$</p>
-<p class="step">$G$ 存在唯一极大值点</p>
-<p class="step">证 $f'\left(\frac{x_1+x_2}{2}\right)\lt g'\left(\frac{x_1+x_2}{2}\right)$</p>
-
-<h2>数学11　导数中的构造问题</h2>
+<p class="step">(1) $g(x)=x-\ln x-1\Rightarrow g'(x)=1-\dfrac1x=\dfrac{x-1}{x}\ (x\gt0)$</p>
+<p class="step">$g'(x)=0\Rightarrow x=1$；$x\gt1$ 时 $g'(x)\gt0$，$0\lt x\lt1$ 时 $g'(x)\lt0$</p>
+<p class="step">$\therefore g$ 的增区间为 $(1,+\infty)$，减区间为 $(0,1)$</p>
+<p class="step">(2) $G(x)=x^2-x\ln x-x\Rightarrow G'(x)=2x-\ln x-2$</p>
+<p class="step">设 $T(x)=G'(x)=2x-\ln x-2$，则 $T'(x)=2-\dfrac1x=\dfrac{2x-1}{x}$</p>
+<p class="step">$T$ 在 $\left(0,\dfrac12\right)$ 上递减、$\left(\dfrac12,+\infty\right)$ 上递增，且 $T\left(\dfrac12\right)=\ln2-1\lt0$</p>
+<p class="step">$T\left(\dfrac1{e^2}\right)=\dfrac2{e^2}\gt0$，$T(1)=0$ $\Rightarrow T(x)=0$ 在 $\left(0,\dfrac12\right)$ 内有唯一解 $x_0$</p>
+<p class="step">$x\in(0,x_0)$：$G'(x)\gt0$，$G$ 递增；$x\in(x_0,1)$：$G'(x)\lt0$，$G$ 递减；$x\in(1,+\infty)$：$G'(x)\gt0$，$G$ 递增</p>
+<p class="step">$\therefore G(x)$ 存在唯一的极大值点 $x_0$</p>
+<p class="step">(3) $f(x)=\ln x\Rightarrow f'(x)=\dfrac1x$，记 $k_1=f'\left(\dfrac{x_1+x_2}{2}\right)=\dfrac2{x_1+x_2}$</p>
+<p class="step">$u(x)=ax+\dfrac bx\ (b\gt0)\Rightarrow u'(x)=a-\dfrac b{x^2}$，记 $k_2=u'\left(\dfrac{x_1+x_2}{2}\right)=a-\dfrac{4b}{(x_1+x_2)^2}$</p>
+<p class="step">$\because x_2\gt x_1\gt0$，$\left(\dfrac{x_1+x_2}{2}\right)^2\gt x_1x_2$ $\Rightarrow k_2\gt a-\dfrac b{x_1x_2}$</p>
+<p class="step">$(x_2-x_1)k_2\gt a(x_2-x_1)-b\cdot\dfrac{x_2-x_1}{x_1x_2}=\left(ax_2+\dfrac b{x_2}\right)-\left(ax_1+\dfrac b{x_1}\right)$</p>
+<p class="step">$=y_2-y_1=\ln x_2-\ln x_1=\ln\dfrac{x_2}{x_1}$</p>
+<p class="step">又 $(x_2-x_1)k_1=\dfrac{2(x_2-x_1)}{x_1+x_2}=\dfrac{2\left(\frac{x_2}{x_1}-1\right)}{1+\frac{x_2}{x_1}}$</p>
+<p class="step">设 $t=\dfrac{x_2}{x_1}\gt1$，证 $\ln t\gt\dfrac{2(t-1)}{1+t}$：令 $r(t)=\ln t-\dfrac{2(t-1)}{1+t}$</p>
+<p class="step">$r'(t)=\dfrac1t-\dfrac4{(t+1)^2}=\dfrac{(t-1)^2}{t(t+1)^2}\gt0$，$r(t)$ 在 $(1,+\infty)$ 上递增</p>
+<p class="step">$\therefore r(t)\gt r(1)=0$，即 $\ln\dfrac{x_2}{x_1}\gt\dfrac{2\left(\frac{x_2}{x_1}-1\right)}{1+\frac{x_2}{x_1}}=(x_2-x_1)k_1$</p>
+<p class="step">$\Rightarrow(x_2-x_1)k_2\gt(x_2-x_1)k_1\Rightarrow k_2\gt k_1$</p>
+<p class="step">$\therefore f'\left(\dfrac{x_1+x_2}{2}\right)\lt u'\left(\dfrac{x_1+x_2}{2}\right)$，得证</p><h2>数学11　导数中的构造问题</h2>
 <p class="ans"><b>选择：</b>1.B　2.A　3.B　4.D　5.BC　6.ACD　<b>填空：</b>7. $(2,+\infty)$　8. $\lambda\ge1/e$</p>
 <h3>3(B)</h3>
 <p class="step">令 $g(x)=f(x)-x^2$</p>
@@ -347,10 +385,11 @@
 <p class="step">$\tan\alpha=\frac{\sin\alpha}{\cos\alpha}=-\frac{\sqrt2}{4}$</p>
 <p class="step">$\therefore f(\alpha)=\cos\alpha=-\frac{2\sqrt2}{3}$</p>
 <h3>10</h3>
-<p class="step">$P\left(\frac12,-\frac{\sqrt3}{2}\right)$</p>
-<p class="step">$\Rightarrow\tan\theta=\frac yx=-\sqrt3$</p>
-<p class="step">(2) $\frac{\tan\theta+1}{\tan\theta-1}=\frac{\sqrt3-1}{\sqrt3+1}=2-\sqrt3$</p>
-<h3>11</h3>
+<p class="step">(1) $\theta$ 为第四象限角，$P\left(\dfrac12,y\right)$ 在单位圆上：$\left(\dfrac12\right)^2+y^2=1$，$y\lt0$</p>
+<p class="step">$\Rightarrow y=-\dfrac{\sqrt3}{2}$</p>
+<p class="step">$\therefore\tan\theta=\dfrac yx=-\sqrt3$</p>
+<p class="step">(2) 原式 $=\dfrac{\sin\theta+\cos\theta}{\sin\theta-\cos\theta}=\dfrac{\tan\theta+1}{\tan\theta-1}$（分子分母同除以 $\cos\theta$）</p>
+<p class="step">$=\dfrac{-\sqrt3+1}{-\sqrt3-1}=\dfrac{\sqrt3-1}{\sqrt3+1}=2-\sqrt3$</p><h3>11</h3>
 <p class="step">分子分母同除 $\cos\alpha$</p>
 <p class="step">$\tan\alpha=-4$</p>
 <p class="step">(1) $\frac{3\tan\alpha-1}{\tan\alpha+1}=\frac{3(-4)-1}{-4+1}=\frac{13}{3}$</p>
@@ -428,9 +467,11 @@
 <h2>数学16　平面向量与复数</h2>
 <p class="ans"><b>选择：</b>1.D　2.C　3.A　4.D　5.AC　6.ACD　<b>填空：</b>7. $4\sqrt2$　8. $5-2\sqrt{13}$</p>
 <h3>7 填空</h3>
-<p class="step">$|z-4i|=|z+2|\Rightarrow x+2y=3$</p>
-<p class="step">$2^x+4^y=2^x+2^{2y}\ge2\sqrt{2^{x+2y}}=4\sqrt2$</p>
-<h3>9</h3>
+<p class="step">设 $z=x+yi\ (x,y\in\mathbb R)$：$|z-4i|=|z+2|\Rightarrow\sqrt{x^2+(y-4)^2}=\sqrt{(x+2)^2+y^2}$</p>
+<p class="step">两边平方：$x^2+y^2-8y+16=x^2+4x+4+y^2\Rightarrow x+2y=3$</p>
+<p class="step">$2^x+4^y=2^x+2^{2y}\ge2\sqrt{2^x\cdot2^{2y}}=2\sqrt{2^{x+2y}}=2\sqrt{2^3}=4\sqrt2$</p>
+<p class="step">当且仅当 $x=2y$，即 $x=\dfrac32,\ y=\dfrac34$ 时取等</p>
+<p class="step">$\therefore$ 最小值为 $4\sqrt2$</p><h3>9</h3>
 <p class="step">设 $z=a+bi$，$z^2=2i$</p>
 <p class="step">$\Rightarrow a^2-b^2=0$，$2ab=2\Rightarrow ab=1$</p>
 <p class="step">$\Rightarrow a=b=1$ 或 $a=b=-1$</p>
@@ -438,9 +479,18 @@
 <p class="step">$z^2=2i$，$z-z^2=1-i$（或 $-1-3i$）</p>
 <p class="step">$S_{\triangle ABC}=\frac12\times2\times1=1$</p>
 <h3>10</h3>
-<p class="step">$\sin C=\frac{\sqrt{15}}{4}$</p>
-<p class="step">(2) $S=\frac{13\sqrt3}{12}+2\sqrt3\sin(C-\frac\pi6)\le\frac{37\sqrt3}{12}$</p>
-<h3>11</h3>
+<p class="step">(1) 设 $BD=x\ (x\gt0)$，$\triangle BCD$ 中由余弦定理：</p>
+<p class="step">$CD^2=BC^2+BD^2-2\cdot BC\cdot BD\cdot\cos\angle CBD$</p>
+<p class="step">$9=4+x^2-2\cdot2\cdot x\cdot\dfrac{11}{16}\Rightarrow4x^2-11x-20=0$</p>
+<p class="step">$\Rightarrow(4x+5)(x-4)=0\Rightarrow x=4$，即 $BD=4$</p>
+<p class="step">$\sin\angle CBD=\sqrt{1-\left(\dfrac{11}{16}\right)^2}=\dfrac{3\sqrt{15}}{16}$</p>
+<p class="step">由正弦定理 $\dfrac{CD}{\sin\angle CBD}=\dfrac{BD}{\sin C}$：$\sin C=\dfrac{4\cdot\frac{3\sqrt{15}}{16}}{3}=\dfrac{\sqrt{15}}{4}$</p>
+<p class="step">(2) 设 $AB=AD=x$，$\angle A=120^\circ\Rightarrow BD=\sqrt3\,x$</p>
+<p class="step">$\triangle BCD$ 中由余弦定理：$9=4+3x^2-2\cdot2\cdot\sqrt3\,x\cos C\Rightarrow x^2=\dfrac{13-12\cos C}{3}$</p>
+<p class="step">$S=S_{\triangle ABD}+S_{\triangle BCD}=\dfrac12x^2\sin120^\circ+\dfrac12\cdot2\cdot3\sin C=\dfrac{\sqrt3}{4}x^2+3\sin C$</p>
+<p class="step">$=\dfrac{13\sqrt3-12\sqrt3\cos C}{12}+3\sin C=\dfrac{13\sqrt3}{12}+2\sqrt3\sin\left(C-\dfrac\pi6\right)$</p>
+<p class="step">$\le\dfrac{13\sqrt3}{12}+2\sqrt3=\dfrac{37\sqrt3}{12}$，当且仅当 $C-\dfrac\pi6=\dfrac\pi2$，即 $C=\dfrac{2\pi}{3}$ 时取等</p>
+<p class="step">$\therefore S_{\max}=\dfrac{37\sqrt3}{12}$</p><h3>11</h3>
 <p class="step">$\vec a\cdot\vec b=\cos2x$，$\vec a\cdot\vec c=\sin x$，$|\vec a+\vec b|=2\cos x$（$x\in[-\frac\pi2,\frac\pi2]$）</p>
 <p class="step">$f(x)=2\vec a\cdot\vec c+|\vec a+\vec b|=2\sin x+2\cos x=2\sqrt2\sin(x+\frac\pi4)$</p>
 <p class="step">单调递增区间 $\left[-\frac\pi2,\frac\pi4\right]$</p>
