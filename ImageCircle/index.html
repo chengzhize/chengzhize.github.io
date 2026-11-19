@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d10">
+<title>环形裁剪 · 内径12 : 外径29</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --panel: #14181d;
+    --line: #232a33;
+    --fg: #e8ecf1;
+    --muted: #8d99a6;
+    --accent: #4c8dff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* ---------- 画布区 ---------- */
+  .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    padding: 12px;
+    background: radial-gradient(120% 120% at 50% 0%, #12161b 0%, #0b0d10 70%);
+  }
+
+  .frame {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  #preview {
+    display: block;
+    background: #000;
+    border-radius: 4px;
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    box-shadow: 0 0 0 1px #262d36, 0 18px 50px rgba(0, 0, 0, .65);
+  }
+
+  #preview.dragging { cursor: grabbing; }
+
+  /* ---------- 控制面板 ---------- */
+  .panel {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    max-height: 54dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .row { display: flex; gap: 10px; }
+  .row > * { flex: 1 1 0; }
+
+  .btn {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: #1b2129;
+    color: var(--fg);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background .15s ease, border-color .15s ease;
+  }
+
+  .btn:hover { background: #232b35; }
+  .btn:active { transform: translateY(1px); }
+
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .btn.primary:hover { background: #3f7ff0; }
+
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .field .k { flex: 0 0 32px; }
+  .field .v {
+    flex: 0 0 62px;
+    text-align: right;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+  }
+
+  input[type=color] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 0 0 auto;
+    width: 46px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type=color]::-webkit-color-swatch-wrapper { padding: 2px; }
+  input[type=color]::-webkit-color-swatch { border: 0; border-radius: 5px; }
+  input[type=color]::-moz-color-swatch { border: 0; border-radius: 5px; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 30px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: #2b333d;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-top: -9px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .55);
+  }
+  input[type=range]::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: #2b333d;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    margin: 0;
+  }
+
+  .select {
+    flex: 1 1 auto;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #1b2129;
+    color: var(--fg);
+    font: inherit;
+    font-size: 14px;
+  }
+
+  .tip {
+    margin: 2px 0 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #6d7885;
+  }
+
+  #file { display: none; }
+
+  /* ---------- 提示 & 保存浮层 ---------- */
+  .toast {
+    position: fixed;
+    left: 50%;
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    transform: translate(-50%, -14px);
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(30, 36, 44, .96);
+    border: 1px solid var(--line);
+    color: var(--fg);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+    z-index: 60;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, .92);
+  }
+  .overlay[hidden] { display: none; }
+
+  .overlay-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .overlay img {
+    display: block;
+    max-width: 100%;
+    max-height: 68dvh;
+    border-radius: 4px;
+  }
+  .overlay p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  body.dropping .stage {
+    outline: 2px dashed var(--accent);
+    outline-offset: -10px;
+  }
+
+  /* ---------- 桌面 / 横屏 ---------- */
+  @media (min-width: 820px) and (orientation: landscape) {
+    .app { flex-direction: row; }
+    .panel {
+      width: 330px;
+      flex: 0 0 330px;
+      max-height: none;
+      border-top: 0;
+      border-left: 1px solid var(--line);
+      padding: 22px 20px;
+      justify-content: flex-start;
+      gap: 14px;
+    }
+    .stage { padding: 24px; }
+  }
+
+  @media (hover: none) {
+    input[type=range]::-webkit-slider-thumb { width: 26px; height: 26px; margin-top: -11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="frame" id="frame">
+      <canvas id="preview"></canvas>
+    </div>
+  </div>
+
+  <aside class="panel">
+    <div class="row">
+      <label class="btn primary" for="file">选择图片</label>
+      <button class="btn" id="reset" type="button">重置</button>
+    </div>
+
+    <div class="field">
+      <span class="k">缩放</span>
+      <input id="zoom" type="range" min="10" max="1000" step="1" value="100" aria-label="缩放">
+      <span class="v" id="zoomVal">100%</span>
+    </div>
+
+    <div class="field">
+      <span class="k">旋转</span>
+      <input id="rot" type="range" min="-180" max="180" step="1" value="0" aria-label="旋转">
+      <span class="v" id="rotVal">0°</span>
+    </div>
+
+    <label class="check">
+      <input id="ghost" type="checkbox" checked>
+      <span>显示环外半透明预览</span>
+    </label>
+
+    <div class="field">
+      <span class="k">填充</span>
+      <input id="fill" type="color" value="#000000" aria-label="环内超出原图部分的填充色">
+      <span class="v" id="fillVal">#000000</span>
+    </div>
+
+    <div class="field">
+      <span class="k">尺寸</span>
+      <select id="outSize" class="select" aria-label="导出尺寸">
+        <option value="256">256 × 256</option>
+        <option value="512">512 × 512</option>
+        <option value="1024" selected>1024 × 1024</option>
+        <option value="2048">2048 × 2048</option>
+      </select>
+    </div>
+
+    <button class="btn primary" id="save" type="button">下载 PNG</button>
+
+    <p class="tip">
+      拖动移动 · 双指缩放/旋转 · 滚轮缩放 · Ctrl+V 粘贴<br>
+      内径 : 外径 = 12 : 29，环外恒为黑色；环内超出原图的部分用上方填充色
+    </p>
+  </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="overlay-inner">
+    <img id="saveImg" alt="裁剪结果">
+    <p>长按上方图片 → 存储到相册</p>
+    <button class="btn" id="overlayClose" type="button">关闭</button>
+  </div>
+</div>
+
+<input type="file" id="file" accept="image/*">
+
+<script>
+(function () {
+  'use strict';
+
+  /* 内径 : 外径 = 12 : 29 */
+  var INNER_RATIO = 12 / 29;
+  var MAX_DPR = 3;
+  var GHOST_ALPHA = 0.14;
+
+  var cv = document.getElementById('preview');
+  var ctx = cv.getContext('2d');
+  var frame = document.getElementById('frame');
+  var fileInput = document.getElementById('file');
+  var zoomEl = document.getElementById('zoom');
+  var zoomVal = document.getElementById('zoomVal');
+  var rotEl = document.getElementById('rot');
+  var rotVal = document.getElementById('rotVal');
+  var ghostEl = document.getElementById('ghost');
+  var fillEl = document.getElementById('fill');
+  var fillVal = document.getElementById('fillVal');
+  var sizeEl = document.getElementById('outSize');
+  var saveBtn = document.getElementById('save');
+  var resetBtn = document.getElementById('reset');
+  var toastEl = document.getElementById('toast');
+  var overlay = document.getElementById('overlay');
+  var saveImg = document.getElementById('saveImg');
+  var overlayClose = document.getElementById('overlayClose');
+
+  /* 画布逻辑边长（CSS px），所有几何都以它为单位 */
+  var size = 320;
+  var dpr = 1;
+  var raf = 0;
+
+  var state = {
+    img: null,
+    baseScale: 1,  // 初始「铺满外圆」的缩放
+    scale: 1,      // 每个图像像素占多少逻辑像素
+    rot: 0,        // 弧度
+    tx: 0,
+    ty: 0,
+    ghost: true,
+    fill: '#000000' // 环内、超出原图处的填充色
+  };
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+  function zoomLimits() {
+    var b = state.baseScale || 1;
+    return { min: b * 0.08, max: b * 12 };
+  }
+
+  /* ================= 绘制 ================= */
+
+  function drawPhoto(g, S) {
+    var img = state.img;
+    g.save();
+    g.imageSmoothingEnabled = true;
+    g.imageSmoothingQuality = 'high';
+    g.translate(S / 2 + state.tx, S / 2 + state.ty);
+    g.rotate(state.rot);
+    g.scale(state.scale, state.scale);
+    g.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+    g.restore();
+  }
+
+  function drawPlaceholder(g, S, cx, cy, R, r) {
+    g.save();
+    g.strokeStyle = 'rgba(255,255,255,.22)';
+    g.lineWidth = Math.max(1, S * 0.004);
+    g.setLineDash([S * 0.022, S * 0.022]);
+    g.beginPath(); g.arc(cx, cy, R * 0.94, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.arc(cx, cy, r * 0.94, 0, Math.PI * 2); g.stroke();
+    g.setLineDash([]);
+
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillStyle = 'rgba(255,255,255,.62)';
+    g.font = '600 ' + Math.max(11, S * 0.04) + 'px system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+    g.fillText('点击导入图片', cx, cy - S * 0.012);
+
+    g.fillStyle = 'rgba(255,255,255,.34)';
+    g.font = Math.max(10, S * 0.027) + 'px system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+    g.fillText('内径 : 外径 = 12 : 29', cx, cy + S * 0.05);
+    g.restore();
+  }
+
+  /**
+   * @param {CanvasRenderingContext2D} g
+   * @param {number} k  逻辑像素 -> 设备像素的缩放
+   * @param {{guides?:boolean, ghost?:boolean}} opts
+   */
+  function paint(g, k, opts) {
+    opts = opts || {};
+    var guides = !!opts.guides;
+    var ghost = (opts.ghost === undefined) ? state.ghost : !!opts.ghost;
+
+    var S = size;
+    var cx = S / 2, cy = S / 2;
+    var R = S / 2;
+    var r = R * INNER_RATIO;
+
+    g.setTransform(k, 0, 0, k, 0, 0);
+    g.clearRect(0, 0, S, S);
+
+    /* 环内、环外一律填黑 */
+    g.fillStyle = '#000';
+    g.fillRect(0, 0, S, S);
+
+    if (!state.img) {
+      if (guides) drawPlaceholder(g, S, cx, cy, R, r);
+      return;
+    }
+
+    /* 环外半透明参考 */
+    if (ghost) {
+      g.save();
+      g.globalAlpha = GHOST_ALPHA;
+      drawPhoto(g, S);
+      g.restore();
+    }
+
+    /* 环形裁剪：外圆顺时针 + 内圆逆时针，非零环绕规则挖空内圆 */
+    g.save();
+    g.beginPath();
+    g.arc(cx, cy, R, 0, Math.PI * 2, false);
+    g.arc(cx, cy, r, 0, Math.PI * 2, true);
+    g.clip();
+    /* 环内、但超出原图边框的部分用所选填充色 */
+    g.fillStyle = state.fill;
+    g.fillRect(0, 0, S, S);
+    drawPhoto(g, S);
+    g.restore();
+
+    if (guides) {
+      g.save();
+      g.lineWidth = 1;
+      g.strokeStyle = 'rgba(255,255,255,.22)';
+      g.beginPath(); g.arc(cx, cy, R - 0.5, 0, Math.PI * 2); g.stroke();
+      g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
+      g.restore();
+    }
+  }
+
+  function render() {
+    paint(ctx, cv.width / size, { guides: true, ghost: state.ghost });
+  }
+
+  function requestRender() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () { raf = 0; render(); });
+  }
+
+  /* ================= 尺寸自适应 ================= */
+
+  function resize() {
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    if (w < 20 || h < 20) return;
+
+    var nextSize = Math.max(120, Math.floor(Math.min(w, h)));
+    var nextDpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+    if (nextSize === size && nextDpr === dpr) return;
+
+    /* 窗口变化时按比例缩放视图，保证构图不变 */
+    var f = nextSize / size;
+    if (state.img) {
+      state.tx *= f;
+      state.ty *= f;
+      state.scale *= f;
+      state.baseScale *= f;
+    }
+
+    size = nextSize;
+    dpr = nextDpr;
+    cv.width = Math.round(size * dpr);
+    cv.height = Math.round(size * dpr);
+    cv.style.width = size + 'px';
+    cv.style.height = size + 'px';
+    render();
+  }
+
+  /* ================= 视图操作 ================= */
+
+  function localPos(e) {
+    var b = cv.getBoundingClientRect();
+    var sx = b.width ? size / b.width : 1;
+    var sy = b.height ? size / b.height : 1;
+    return { x: (e.clientX - b.left) * sx, y: (e.clientY - b.top) * sy };
+  }
+
+  /* 以画布上某点为锚缩放 */
+  function zoomAt(p, factor) {
+    if (!state.img) return;
+    var lim = zoomLimits();
+    var ns = clamp(state.scale * factor, lim.min, lim.max);
+    if (ns === state.scale) return;
+
+    var S2 = size / 2;
+    var dx = p.x - S2 - state.tx;
+    var dy = p.y - S2 - state.ty;
+    var c = Math.cos(state.rot), s = Math.sin(state.rot);
+    /* 锚点对应的图像坐标 */
+    var ax = (dx * c + dy * s) / state.scale;
+    var ay = (-dx * s + dy * c) / state.scale;
+
+    state.scale = ns;
+    state.tx = p.x - S2 - (ax * c - ay * s) * ns;
+    state.ty = p.y - S2 - (ax * s + ay * c) * ns;
+    clampPan();
+
+    requestRender();
+    syncSliders();
+  }
+
+  /* 旋转后图像的半宽半高，保证图像始终盖住画布中心，不会拖丢 */
+  function clampPan() {
+    var img = state.img;
+    if (!img) return;
+    var c = Math.abs(Math.cos(state.rot)), s = Math.abs(Math.sin(state.rot));
+    var hw = img.naturalWidth / 2, hh = img.naturalHeight / 2;
+    var ex = (hw * c + hh * s) * state.scale;
+    var ey = (hw * s + hh * c) * state.scale;
+    state.tx = clamp(state.tx, -ex, ex);
+    state.ty = clamp(state.ty, -ey, ey);
+  }
+
+  var pts = new Map();
+  var gesture = null;
+
+  function beginPinch() {
+    var arr = Array.from(pts.values());
+    var a = arr[0], b = arr[1];
+    var mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    var S2 = size / 2;
+    var dx = mid.x - S2 - state.tx;
+    var dy = mid.y - S2 - state.ty;
+    var c = Math.cos(state.rot), s = Math.sin(state.rot);
+    var lim = zoomLimits();
+
+    return {
+      type: 'pinch',
+      dist0: Math.hypot(a.x - b.x, a.y - b.y) || 1,
+      ang0: Math.atan2(b.y - a.y, b.x - a.x),
+      scale0: state.scale,
+      rot0: state.rot,
+      /* 双指中点对应的图像坐标，缩放旋转时保持不动 */
+      ax: (dx * c + dy * s) / state.scale,
+      ay: (-dx * s + dy * c) / state.scale,
+      minScale: lim.min,
+      maxScale: lim.max
+    };
+  }
+
+  cv.addEventListener('pointerdown', function (e) {
+    if (!state.img) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+    pts.set(e.pointerId, localPos(e));
+
+    if (pts.size === 1) {
+      gesture = { type: 'pan', last: localPos(e) };
+      cv.classList.add('dragging');
+    } else if (pts.size >= 2) {
+      gesture = beginPinch();
+    }
+  });
+
+  cv.addEventListener('pointermove', function (e) {
+    if (!pts.has(e.pointerId)) return;
+    var p = localPos(e);
+    pts.set(e.pointerId, p);
+    if (!gesture) return;
+
+    if (gesture.type === 'pan') {
+      state.tx += p.x - gesture.last.x;
+      state.ty += p.y - gesture.last.y;
+      gesture.last = p;
+      clampPan();
+      requestRender();
+    } else if (gesture.type === 'pinch' && pts.size >= 2) {
+      var arr = Array.from(pts.values());
+      var a = arr[0], b = arr[1];
+      var mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      var dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+      var ang = Math.atan2(b.y - a.y, b.x - a.x);
+
+      var ns = clamp(gesture.scale0 * (dist / gesture.dist0), gesture.minScale, gesture.maxScale);
+      var rot = gesture.rot0 + (ang - gesture.ang0);
+      var c = Math.cos(rot), s = Math.sin(rot);
+      var S2 = size / 2;
+
+      state.scale = ns;
+      state.rot = rot;
+      state.tx = mid.x - S2 - (gesture.ax * c - gesture.ay * s) * ns;
+      state.ty = mid.y - S2 - (gesture.ax * s + gesture.ay * c) * ns;
+      clampPan();
+
+      requestRender();
+      syncSliders();
+    }
+  });
+
+  function endPointer(e) {
+    if (!pts.has(e.pointerId)) return;
+    pts.delete(e.pointerId);
+    try { cv.releasePointerCapture(e.pointerId); } catch (err) {}
+
+    if (pts.size === 0) {
+      gesture = null;
+      cv.classList.remove('dragging');
+    } else if (pts.size === 1) {
+      gesture = { type: 'pan', last: Array.from(pts.values())[0] };
+    } else {
+      gesture = beginPinch();
+    }
+  }
+
+  cv.addEventListener('pointerup', endPointer);
+  cv.addEventListener('pointercancel', endPointer);
+
+  cv.addEventListener('wheel', function (e) {
+    if (!state.img) return;
+    e.preventDefault();
+    var p = localPos(e);
+    /* 每格滚轮约 5%，便于精细控制 */
+    var unit = e.deltaMode === 1 ? 0.0167 : (e.deltaMode === 2 ? 0.05 : 0.0005);
+    zoomAt(p, Math.exp(-e.deltaY * unit));
+  }, { passive: false });
+
+  cv.addEventListener('click', function () {
+    if (!state.img) fileInput.click();
+  });
+
+  /* ================= 控件 ================= */
+
+  function normDeg(rad) {
+    var d = rad * 180 / Math.PI;
+    d = ((d + 180) % 360 + 360) % 360 - 180;
+    return Math.round(d);
+  }
+
+  function syncSliders() {
+    if (!state.img) return;
+    var pct = Math.round(state.scale / state.baseScale * 100);
+    zoomEl.value = clamp(pct, 10, 1000);
+    zoomVal.textContent = pct + '%';
+
+    var d = normDeg(state.rot);
+    rotEl.value = d;
+    rotVal.textContent = d + '°';
+  }
+
+  zoomEl.addEventListener('input', function () {
+    if (!state.img) return;
+    var lim = zoomLimits();
+    state.scale = clamp(state.baseScale * (+zoomEl.value) / 100, lim.min, lim.max);
+    zoomVal.textContent = Math.round(state.scale / state.baseScale * 100) + '%';
+    requestRender();
+  });
+
+  rotEl.addEventListener('input', function () {
+    if (!state.img) return;
+    state.rot = (+rotEl.value) * Math.PI / 180;
+    rotVal.textContent = (+rotEl.value) + '°';
+    requestRender();
+  });
+
+  ghostEl.addEventListener('change', function () {
+    state.ghost = ghostEl.checked;
+    requestRender();
+  });
+
+  fillEl.addEventListener('input', function () {
+    state.fill = fillEl.value;
+    fillVal.textContent = fillEl.value.toUpperCase();
+    requestRender();
+  });
+
+  /* ================= 载入图片 ================= */
+
+  function resetView() {
+    if (!state.img) return;
+    var img = state.img;
+    /* 初始铺满外圆的外接正方形 */
+    var s = Math.max(size / img.naturalWidth, size / img.naturalHeight);
+    state.baseScale = s;
+    state.scale = s;
+    state.rot = 0;
+    state.tx = 0;
+    state.ty = 0;
+    syncSliders();
+    requestRender();
+  }
+
+  function loadFile(file) {
+    if (!file || (file.type && file.type.indexOf('image/') !== 0)) {
+      toast('请选择图片文件');
+      return;
+    }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      URL.revokeObjectURL(url);
+      state.img = img;
+      resetView();
+      toast('已载入 ' + img.naturalWidth + ' × ' + img.naturalHeight);
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      toast('无法读取该图片');
+    };
+    img.src = url;
+  }
+
+  fileInput.addEventListener('change', function () {
+    var f = fileInput.files && fileInput.files[0];
+    if (f) loadFile(f);
+    fileInput.value = '';
+  });
+
+  resetBtn.addEventListener('click', function () {
+    if (!state.img) { fileInput.click(); return; }
+    resetView();
+    toast('已重置');
+  });
+
+  /* 拖拽导入（桌面） */
+  var dragDepth = 0;
+  window.addEventListener('dragenter', function (e) {
+    if (!e.dataTransfer || Array.prototype.indexOf.call(e.dataTransfer.types, 'Files') < 0) return;
+    e.preventDefault();
+    dragDepth++;
+    document.body.classList.add('dropping');
+  });
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('dragleave', function (e) {
+    e.preventDefault();
+    dragDepth = Math.max(0, dragDepth - 1);
+    if (dragDepth === 0) document.body.classList.remove('dropping');
+  });
+  window.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dragDepth = 0;
+    document.body.classList.remove('dropping');
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) loadFile(f);
+  });
+
+  /* 粘贴导入 */
+  window.addEventListener('paste', function (e) {
+    var items = e.clipboardData && e.clipboardData.items;
+    if (!items) return;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image/') === 0) {
+        var f = items[i].getAsFile();
+        if (f) { loadFile(f); break; }
+      }
+    }
+  });
+
+  /* ================= 导出 ================= */
+
+  function isIOS() {
+    var ua = navigator.userAgent;
+    if (/iPad|iPhone|iPod/.test(ua)) return true;
+    return navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  }
+
+  saveBtn.addEventListener('click', function () {
+    if (!state.img) { toast('请先导入图片'); return; }
+
+    var n = parseInt(sizeEl.value, 10) || 512;
+    var c = document.createElement('canvas');
+    c.width = n;
+    c.height = n;
+    var g = c.getContext('2d');
+    paint(g, n / size, { guides: false, ghost: false });
+
+    if (!c.toBlob) {
+      var a0 = document.createElement('a');
+      a0.href = c.toDataURL('image/png');
+      a0.download = 'ring-' + n + 'x' + n + '.png';
+      a0.click();
+      return;
+    }
+
+    c.toBlob(function (blob) {
+      if (!blob) { toast('导出失败'); return; }
+      var url = URL.createObjectURL(blob);
+
+      if (isIOS()) {
+        /* iOS 不支持 a[download]，改为展示图片让用户长按保存 */
+        saveImg.src = url;
+        overlay.hidden = false;
+      } else {
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'ring-' + n + 'x' + n + '.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 15000);
+        toast('已导出 ' + n + ' × ' + n);
+      }
+    }, 'image/png');
+  });
+
+  overlayClose.addEventListener('click', function () {
+    overlay.hidden = true;
+    if (saveImg.src) URL.revokeObjectURL(saveImg.src);
+    saveImg.removeAttribute('src');
+  });
+
+  /* ================= 启动 ================= */
+
+  var toastTimer = 0;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+  }
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(function () { resize(); }).observe(frame);
+  }
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', function () {
+    setTimeout(resize, 150);
+  });
+
+  resize();
+  render();
+})();
+</script>
+</body>
+</html>
